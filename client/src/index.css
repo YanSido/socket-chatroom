@@ -107,7 +107,7 @@ body {
 }
 
 .chat .chat-history .message-data {
-  margin-bottom: 15px;
+  padding-bottom: -20px;
 }
 
 .chat .chat-history .message-data img {
@@ -116,8 +116,7 @@ body {
 }
 
 .chat .chat-history .message-data-time {
-  color: #434651;
-  padding-left: 6px;
+  color: #434755;
 }
 
 .chat .chat-history .message {
