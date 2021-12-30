@@ -10,8 +10,16 @@ export default function Contacts(props) {
       </div>
       <ul class="list-unstyled chat-list mt-2">
         {props.users.map((user, index) => {
-          if (user.status === "online") return <Contact name={user.name} active="active" />;
-          return <Contact name={user.name} lastseen={user.lastseen} />;
+          if (user.status === "online") {
+            if (user.name === props.connection.current.id)
+              return (
+                <Contact connection={props.connection} name={`${user.name} (ME)`} active="active" />
+              );
+            return <Contact connection={props.connection} name={user.name} active="active" />;
+          } else
+            return (
+              <Contact connection={props.connection} name={user.name} lastseen={user.lastseen} />
+            );
         })}
       </ul>
     </div>

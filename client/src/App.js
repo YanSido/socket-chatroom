@@ -34,6 +34,12 @@ function App() {
       socketRef.current.on("typingBack", (user) => {
         setTypingUser(user.name);
       });
+      socketRef.current.on("privateMessageBack", (data) => {
+        setMessages((prevState) => {
+          return [...prevState, { name: data.from, message: data.message, private: true }];
+        });
+        console.log("41", messages);
+      });
     } catch {}
   }, []);
 
@@ -43,7 +49,7 @@ function App() {
         <div class="col-lg-12">
           <div class="card chat-app">
             <div id="plist" class="people-list mb-3">
-              <Contacts users={users} />
+              <Contacts connection={socketRef} users={users} />
             </div>
             <div class="chat">
               <div class="chat-header clearfix">

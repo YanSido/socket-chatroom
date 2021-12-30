@@ -9,7 +9,11 @@ export default function ChatHistory(props) {
           {props.messages.map((message, index) => {
             if (message.name === props.id)
               return <Message message={message.message} name={message.name} admin={true} />;
-            return <Message message={message.message} name={message.name} />;
+            else {
+              if (message.private)
+                return <Message private={true} message={message.message} name={message.name} />;
+              return <Message message={message.message} name={message.name} />;
+            }
           })}
         </ul>
       </div>

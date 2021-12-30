@@ -28,7 +28,7 @@ export default function Message(props) {
     <div>
       <li class="clearfix">
         <div class="message my-message">
-          {`${props.name}: `}
+          {props.private ? `${props.name} TO YOU: ` : `${props.name}:`}
           <br />
           {props.message}
           <br />
