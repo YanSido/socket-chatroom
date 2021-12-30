@@ -1,17 +1,16 @@
 import React from "react";
 
 export default function Message(props) {
-  if (!props.member) {
+  if (props.admin) {
     return (
       <li class="clearfix">
         <div class="message other-message float-right">
-          {"SIDO: "}
+          {`${props.name}: `}
           <br />
-          Hi Aiden, how are you? How is the project coming along?
+          {props.message}
           <br />
-          <hr />
           <div class="message-data">
-            <span class="message-data-time">10:12</span>
+            <small class="message-data-time">10:12</small>
           </div>
         </div>
       </li>
@@ -21,13 +20,12 @@ export default function Message(props) {
     <div>
       <li class="clearfix">
         <div class="message my-message">
-          {"SIDO: "}
+          {`${props.name}: `}
           <br />
-          Are we meeting today?
+          {props.message}
           <br />
-          <hr />
           <div class="message-data">
-            <span class="message-data-time">10:12</span>
+            <small class="message-data-time">10:12</small>
           </div>
         </div>
       </li>

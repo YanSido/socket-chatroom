@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const PORT = process.env.PORT || 8080;
+let HISTORY = [{ name: "yan", message: "hello" }];
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,13 +15,19 @@ app.use("/public", express.static(`./client/public`));
 
 io.on("connection", (socket) => {
   console.log(socket.id, "is connected");
+  socket.on("setup", () => {
+    io.emit("setup", HISTORY);
+  });
   socket.on("message", ({ name, message }) => {
-    io.emit("messageBack", { name, message });
+    console.log("Recieved new message from:", name, "-", message);
+    HISTORY.push({ name, message });
+
+    io.emit("messageBack", HISTORY);
   });
 
   socket.on("disconnect", () => {
     console.log(socket.id, "is disconnected");
-    io.emit("messageBack", { name: "wow", message: "render" });
+    io.emit("serverMessages", { name: "wow", message: "render", servermessage: true });
   });
 });
 

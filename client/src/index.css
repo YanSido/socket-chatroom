@@ -107,7 +107,7 @@ body {
 }
 
 .chat .chat-history .message-data {
-  padding-bottom: -20px;
+  margin-top: 15px;
 }
 
 .chat .chat-history .message-data img {
@@ -144,6 +144,7 @@ body {
 }
 
 .chat .chat-history .my-message {
+  margin-bottom: 20px;
   background: #efefef;
 }
 
@@ -197,6 +198,10 @@ body {
 
 .float-right {
   float: right;
+}
+
+#send-button {
+  padding-bottom: 10px;
 }
 
 .clearfix:after {

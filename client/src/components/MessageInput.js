@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useRef } from "react";
 
-export default function MessageInput() {
+export default function MessageInput(props) {
+  const inputEl = useRef();
+  function handleSend() {
+    const message = inputEl.current.value;
+    const name = props.id;
+    props.connection.current.emit("message", { name, message });
+    inputEl.current.value = "";
+  }
   return (
     <div>
       <div class="chat-message clearfix">
         <div class="input-group mb-0">
           <div class="input-group-prepend">
             <span class="input-group-text">
-              <i class="fa fa-send"></i>
+              <i
+                onClick={() => {
+                  handleSend();
+                }}
+                class="fa fa-send"
+                id="send-button"
+              ></i>
             </span>
           </div>
-          <input type="text" class="form-control" placeholder="Enter text here..." />
+          <input
+            ref={inputEl}
+            onKeyUp={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) handleSend();
+            }}
+            type="text"
+            class="form-control"
+            placeholder="Enter text here..."
+          />
         </div>
       </div>
     </div>
