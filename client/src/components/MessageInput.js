@@ -8,6 +8,10 @@ export default function MessageInput(props) {
     props.connection.current.emit("message", { name, message });
     inputEl.current.value = "";
   }
+  function handleChange() {
+    const name = props.id;
+    props.connection.current.emit("typing", { name });
+  }
   return (
     <div>
       <div class="chat-message clearfix">
@@ -25,6 +29,9 @@ export default function MessageInput(props) {
           </div>
           <input
             ref={inputEl}
+            onChange={() => {
+              handleChange();
+            }}
             onKeyUp={(e) => {
               if (e.key === "Enter" && !e.shiftKey) handleSend();
             }}

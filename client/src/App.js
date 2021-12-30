@@ -9,6 +9,8 @@ const URL = "http://localhost:3000";
 
 function App() {
   const [messages, setMessages] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [typingUser, setTypingUser] = useState("");
   const [id, setId] = useState("");
   const socketRef = useRef();
 
@@ -21,20 +23,18 @@ function App() {
         console.log("Connected to Server");
       });
       socketRef.current.on("setup", (history) => {
-        console.log("23", history);
         setMessages(history);
       });
       socketRef.current.on("messageBack", (history) => {
         setMessages(history);
       });
-      socketRef.current.on("serverMessages", (data) => {
-        alert(data.servermessage);
+      socketRef.current.on("usersUpdate", (users) => {
+        setUsers(users);
+      });
+      socketRef.current.on("typingBack", (user) => {
+        setTypingUser(user.name);
       });
     } catch {}
-    // socketRef.current.on("messageBack", ({ name, message }) => {
-    //   setChat((prevState) => {
-    //     return [...prevState, { name, message }];
-    //   });
   }, []);
 
   return (
@@ -42,13 +42,13 @@ function App() {
       <div class="row clearfix">
         <div class="col-lg-12">
           <div class="card chat-app">
-            <div id="plist" class="people-list">
-              <Contacts />
+            <div id="plist" class="people-list mb-3">
+              <Contacts users={users} />
             </div>
             <div class="chat">
               <div class="chat-header clearfix">
                 <div class="row">
-                  <GroupHeader />
+                  <GroupHeader typingUser={typingUser} id={id} />
                 </div>
               </div>
               <ChatHistory id={id} messages={messages} />
