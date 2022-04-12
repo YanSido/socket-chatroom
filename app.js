@@ -21,7 +21,6 @@ function getTime() {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use("/public", express.static(`./client/public`));
 
 io.on("connection", (socket) => {
   USERS.push({ name: socket.id, status: "online" });
@@ -62,9 +61,11 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use("/", express.static(`./client/build`));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 http.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

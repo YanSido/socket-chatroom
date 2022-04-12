@@ -8,7 +8,7 @@ import MessageInput from "./components/MessageInput";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { store } from "react-notifications-component";
-const URL = "http://localhost:3000";
+const URL = "/";
 
 function App() {
   const [messages, setMessages] = useState([]);
