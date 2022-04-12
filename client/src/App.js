@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import io from "socket.io-client";
 import ChatHistory from "./components/ChatHistory";
@@ -9,6 +10,7 @@ import "react-notifications-component/dist/theme.css";
 const URL = "/";
 
 function App() {
+  let { username } = useParams();
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [lastConnection, setLastConnection] = "";
@@ -55,6 +57,7 @@ function App() {
         <div class="col-lg-12">
           <div class="card chat-app">
             <div id="plist" class="people-list mb-3">
+              <h1>{username + "SS"}</h1>
               <Contacts connection={socketRef} users={users} />
             </div>
             <div class="chat">

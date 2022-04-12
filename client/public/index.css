@@ -213,6 +213,14 @@ body {
   height: 0;
 }
 
+#loginscreen {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
+}
+
 @media only screen and (max-width: 767px) {
   .chat-app .people-list {
     height: 465px;
