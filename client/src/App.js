@@ -20,10 +20,10 @@ function App() {
 
   useEffect(() => {
     try {
-      socketRef.current = io.connect(URL);
+      socketRef.current = io.connect(URL, { query: `username=${username}` });
       socketRef.current.on("connect", () => {
         setId(socketRef.current.id);
-        socketRef.current.emit("setup");
+        socketRef.current.emit("setup", { username });
         socketRef.current.emit("lastConnection", socketRef.current.id);
         console.log("Connected to Server");
       });

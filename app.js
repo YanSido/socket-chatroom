@@ -23,19 +23,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 io.on("connection", (socket) => {
-  USERS.push({ name: socket.id, status: "online" });
-  console.log(socket.id, "is connected");
+  USERS.push({ name: socket.handshake.query.username, status: "online" });
+  console.log(socket.handshake.query.username, "is connected");
+
   socket.on("setup", () => {
     io.emit("setup", HISTORY);
     io.emit("usersUpdate", USERS);
   });
+
   socket.on("message", ({ name, message }) => {
     console.log("Recieved new message from:", name, "-", message);
     HISTORY.push({ name, message });
 
     io.emit("messageBack", HISTORY);
   });
-
   socket.on("typing", (name) => {
     io.emit("typingBack", name);
     const timer = setTimeout(() => {
@@ -50,9 +51,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log(socket.id, "is disconnected");
+    console.log(socket.handshake.query.username, "is disconnected");
     USERS.forEach((user) => {
-      if (user.name === socket.id) {
+      if (user.name === socket.handshake.query.username) {
         user.status = "offline";
         user.lastseen = getTime();
       }
