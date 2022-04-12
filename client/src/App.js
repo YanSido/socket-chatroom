@@ -5,9 +5,7 @@ import ChatHistory from "./components/ChatHistory";
 import Contacts from "./components/Contacts";
 import GroupHeader from "./components/GroupHeader";
 import MessageInput from "./components/MessageInput";
-import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
-import { store } from "react-notifications-component";
 const URL = "/";
 
 function App() {
@@ -17,22 +15,6 @@ function App() {
   const [typingUser, setTypingUser] = useState("");
   const [id, setId] = useState("");
   const socketRef = useRef();
-
-  useEffect(() => {
-    store.addNotification({
-      title: "New Connection!",
-      message: `${lastConnection}`,
-      type: "success",
-      insert: "top",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      dismiss: {
-        duration: 3000,
-        onScreen: true,
-      },
-    });
-  }, [lastConnection]);
 
   useEffect(() => {
     try {
@@ -69,7 +51,6 @@ function App() {
 
   return (
     <div class="container">
-      <ReactNotification />
       <div class="row clearfix">
         <div class="col-lg-12">
           <div class="card chat-app">
