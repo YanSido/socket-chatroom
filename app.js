@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const PORT = process.env.PORT || 8080;
-let HISTORY = [{ name: "SERVER", message: "Welcome to students chat" }];
+let HISTORY = [{ username: "SERVER", message: "Welcome to students chat" }];
 let USERS = [];
 
 function getTime() {
@@ -24,7 +24,7 @@ app.use(cors());
 
 io.on("connection", (socket) => {
   USERS.push({ id: socket.id, name: socket.handshake.query.username, status: "online" });
-  console.log(socket.handshake.query.username, "is connected");
+  console.log(socket.handshake.query.username, "is connected", "|", socket.id);
 
   socket.on("setup", () => {
     io.emit("setup", HISTORY);
@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("message", ({ username, message }) => {
-    console.log("Recieved new message from:", username, "-", message);
+    console.log("Recieved new message from:", username, "-", message, "|", socket.id);
     HISTORY.push({ id: socket.id, username, message });
 
     io.emit("messageBack", HISTORY);
@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log(socket.handshake.query.username, "is disconnected");
+    console.log(socket.handshake.query.username, "is disconnected", "|", socket.id);
     USERS.forEach((user) => {
       if (user.id === socket.id) {
         user.status = "offline";
