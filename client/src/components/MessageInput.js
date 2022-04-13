@@ -4,13 +4,15 @@ export default function MessageInput(props) {
   const inputEl = useRef();
   function handleSend() {
     const message = inputEl.current.value;
-    const name = props.id;
-    props.connection.current.emit("message", { name, message });
+    const name = props.username;
+    const id = props.id;
+    props.connection.current.emit("message", { id, username: name, message });
     inputEl.current.value = "";
   }
   function handleChange() {
-    const name = props.id;
-    props.connection.current.emit("typing", { name });
+    const id = props.id;
+    const name = props.username;
+    props.connection.current.emit("typing", { id, username: name });
   }
   return (
     <div>

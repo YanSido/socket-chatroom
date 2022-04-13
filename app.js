@@ -31,16 +31,16 @@ io.on("connection", (socket) => {
     io.emit("usersUpdate", USERS);
   });
 
-  socket.on("message", ({ name, message }) => {
-    console.log("Recieved new message from:", name, "-", message);
-    HISTORY.push({ name, message });
+  socket.on("message", ({ username, message }) => {
+    console.log("Recieved new message from:", username, "-", message);
+    HISTORY.push({ id: socket.id, username, message });
 
     io.emit("messageBack", HISTORY);
   });
-  socket.on("typing", (name) => {
-    io.emit("typingBack", name);
+  socket.on("typing", (user) => {
+    io.emit("typingBack", user);
     const timer = setTimeout(() => {
-      io.emit("typingBack", { name: null });
+      io.emit("typingBack", { user: null });
     }, 2000);
     return () => clearTimeout(timer);
   });

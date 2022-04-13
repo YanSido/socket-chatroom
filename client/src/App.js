@@ -12,7 +12,8 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [lastConnection, setLastConnection] = "";
-  const [typingUser, setTypingUser] = useState("");
+  const [typingUserId, setTypingUserId] = useState("");
+  const [typingUserName, setTypingUserName] = useState("");
   const [id, setId] = useState("");
   const socketRef = useRef();
 
@@ -20,7 +21,7 @@ function App() {
     try {
       socketRef.current = io.connect(URL, { query: `username=${username}` });
       socketRef.current.on("connect", () => {
-        setId(username);
+        setId(socketRef.current.id);
         socketRef.current.emit("setup", { username });
         socketRef.current.emit("lastConnection", username);
         console.log("Connected to Server");
@@ -38,7 +39,8 @@ function App() {
         setUsers(users);
       });
       socketRef.current.on("typingBack", (user) => {
-        setTypingUser(user.name);
+        setTypingUserId(user.id);
+        setTypingUserName(user.username);
       });
       socketRef.current.on("privateMessageBack", (data) => {
         setMessages((prevState) => {
@@ -60,11 +62,16 @@ function App() {
             <div class="chat">
               <div class="chat-header clearfix">
                 <div class="row">
-                  <GroupHeader typingUser={typingUser} id={id} />
+                  <GroupHeader
+                    typingUserId={typingUserId}
+                    typingUserName={typingUserName}
+                    username={username}
+                    id={id}
+                  />
                 </div>
               </div>
-              <ChatHistory id={id} messages={messages} />
-              <MessageInput id={id} connection={socketRef} />
+              <ChatHistory username={username} id={id} messages={messages} />
+              <MessageInput username={username} id={id} connection={socketRef} />
             </div>
           </div>
         </div>

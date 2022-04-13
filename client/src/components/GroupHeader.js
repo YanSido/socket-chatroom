@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function GroupHeader(props) {
-  if (props.id !== props.typingUser) {
+  if (props.id !== props.typingUserId) {
     return (
       <div>
         <div class="chat-header clearfix">
@@ -9,7 +9,7 @@ export default function GroupHeader(props) {
             <div class="col-lg-6">
               <div class="chat-about">
                 <h6 class="m-b-0">Students</h6>
-                {props.typingUser ? <small>{props.typingUser} is typing ...</small> : null}
+                {props.typingUserId ? <small>{props.typingUserName} is typing ...</small> : null}
               </div>
             </div>
           </div>
