@@ -28,3 +28,4 @@ Github: [@Yan Sidorenko](https://github.com/YanSido)
 
 Project Link: [Sido's Chatroom-socket](https://github.com/YanSido/socket-chatroom)
 
+Heroku: [https://sido-chat-room.herokuapp.com/](https://sido-chat-room.herokuapp.com/)
