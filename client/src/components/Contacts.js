@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Contact from "./Contact";
 
 export default function Contacts(props) {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState(""); // filter contacts by name
   const handleChange = (e) => {
     setFilter(e.target.value);
   };
@@ -27,7 +27,9 @@ export default function Contacts(props) {
           })
           .map((user, index) => {
             if (user.status === "online") {
+              // if user is online
               if (user.id === props.connection.current.id)
+                // if contact is me
                 return (
                   <Contact
                     connection={props.connection}
@@ -37,6 +39,7 @@ export default function Contacts(props) {
                   />
                 );
               return (
+                // if contact is not me
                 <Contact
                   connection={props.connection}
                   name={user.name}
@@ -44,7 +47,8 @@ export default function Contacts(props) {
                   active="active"
                 />
               );
-            } else
+            } // if user is offline
+            else
               return (
                 <Contact
                   connection={props.connection}

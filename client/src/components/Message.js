@@ -2,6 +2,7 @@ import React from "react";
 
 export default function Message(props) {
   function getTime() {
+    // current time
     let d = new Date();
     let minutes = d.getMinutes();
     let hours = d.getHours();
@@ -10,6 +11,7 @@ export default function Message(props) {
     return `${hours}:${minutes}`;
   }
   if (props.admin) {
+    // if message is from me
     return (
       <li class="clearfix">
         <div class="message other-message float-right">
@@ -25,6 +27,7 @@ export default function Message(props) {
     );
   }
   return (
+    // if message is from other users
     <div>
       <li class="clearfix">
         <div class="message my-message">

@@ -1,20 +1,24 @@
 import React, { useState, useRef } from "react";
 
 export default function Contact(props) {
-  const inputEl = useRef();
-  const [displaySendPrivateMessageBox, setDisplaySendPrivateMessageBox] = useState("hidden");
+  const inputEl = useRef(); // message box refference
+  const [displaySendPrivateMessageBox, setDisplaySendPrivateMessageBox] = useState("hidden"); // private message box is hidden by default
+
   function handleClick() {
+    // when user clicks on the contact
     if (displaySendPrivateMessageBox === "hidden") setDisplaySendPrivateMessageBox("visible");
     else setDisplaySendPrivateMessageBox("hidden");
   }
 
   function handleSend() {
+    // send private message
     const message = inputEl.current.value;
     const myId = props.connection.current.id;
     const targetId = props.id;
     const targetName = props.name;
     inputEl.current.value = "";
     if (myId !== targetId)
+      // if not sending to myself
       props.connection.current.emit("privateMessage", {
         username: targetName,
         id: myId,
@@ -24,6 +28,7 @@ export default function Contact(props) {
   }
 
   if (props.active) {
+    // if user is online
     return (
       <div>
         <li
@@ -40,7 +45,7 @@ export default function Contact(props) {
               <i class="fa fa-circle online"></i> online{" "}
             </div>
           </div>
-          <div style={{ visibility: displaySendPrivateMessageBox }}>
+          <div id="private-message-box" style={{ visibility: displaySendPrivateMessageBox }}>
             <input ref={inputEl} id="message-input" placeholder="Enter private message" />
             <button
               onClick={() => {
@@ -56,6 +61,7 @@ export default function Contact(props) {
     );
   }
   return (
+    // if user is offline
     <div>
       <li
         class={`clearfix mb-3`}
@@ -71,7 +77,7 @@ export default function Contact(props) {
             <i class="fa fa-circle offline"></i> {`last seen at ${props.lastseen}`}{" "}
           </div>
         </div>
-        <div style={{ visibility: displaySendPrivateMessageBox }}>
+        <div id="private-message-box" style={{ visibility: displaySendPrivateMessageBox }}>
           <input ref={inputEl} id="message-input" placeholder="Enter private message" />
           <button
             onClick={() => {

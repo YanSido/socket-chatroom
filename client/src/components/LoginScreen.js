@@ -5,6 +5,7 @@ function Login(props) {
   const [username, setUsername] = useState("");
 
   return (
+    // enter chat room with username
     <div id="loginscreen">
       <div class="wrapper">
         <input

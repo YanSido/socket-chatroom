@@ -11,27 +11,29 @@ function App() {
   let { username } = useParams();
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-  const [typingUserId, setTypingUserId] = useState("");
+  const [typingUserId, setTypingUserId] = useState(""); // current typing user id
   const [typingUserName, setTypingUserName] = useState("");
-  const [id, setId] = useState("");
-  const socketRef = useRef();
+  const [id, setId] = useState(""); // current socket's id
+  const socketRef = useRef(); // socket refference
 
   useEffect(() => {
     try {
-      socketRef.current = io.connect(URL, { query: `username=${username}` });
+      socketRef.current = io.connect(URL, { query: `username=${username}` }); // coonect to server with username
       socketRef.current.on("connect", () => {
         setId(socketRef.current.id);
         socketRef.current.emit("setup", { username });
-        socketRef.current.emit("lastConnection", username);
         console.log("Connected to Server");
       });
       socketRef.current.on("setup", (history) => {
+        // get chat history from server
         setMessages(history);
       });
       socketRef.current.on("usersUpdate", (users) => {
+        // get users list from server
         setUsers(users);
       });
       socketRef.current.on("typingBack", (user) => {
+        // get current typing user from server
         setTypingUserId(user.id);
         setTypingUserName(user.username);
       });

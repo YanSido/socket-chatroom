@@ -1,18 +1,19 @@
 import React, { useRef } from "react";
 
 export default function MessageInput(props) {
-  const inputEl = useRef();
+  // message box
+  const inputEl = useRef(); // message box input refference
   function handleSend() {
     const message = inputEl.current.value;
     const name = props.username;
     const id = props.id;
-    props.connection.current.emit("message", { id, username: name, message });
+    props.connection.current.emit("message", { id, username: name, message }); // send message to server
     inputEl.current.value = "";
   }
   function handleChange() {
     const id = props.id;
     const name = props.username;
-    props.connection.current.emit("typing", { id, username: name });
+    props.connection.current.emit("typing", { id, username: name }); // send current typing user to server
   }
   return (
     <div>

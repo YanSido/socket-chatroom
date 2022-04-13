@@ -2,6 +2,7 @@ import React from "react";
 
 export default function GroupHeader(props) {
   if (props.id !== props.typingUserId) {
+    // if the typing user is not me
     return (
       <div>
         <div class="chat-header clearfix">
@@ -18,6 +19,7 @@ export default function GroupHeader(props) {
     );
   }
   return (
+    // if the typing user is me
     <div>
       <div class="chat-header clearfix">
         <div class="row">
