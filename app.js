@@ -34,9 +34,9 @@ io.on("connection", (socket) => {
   socket.on("message", ({ username, message }) => {
     console.log("Recieved new message from:", username, "-", message, "|", socket.id);
     HISTORY.push({ id: socket.id, username, message });
-
-    io.emit("messageBack", HISTORY);
+    io.emit("setup", HISTORY);
   });
+
   socket.on("typing", (user) => {
     io.emit("typingBack", user);
     const timer = setTimeout(() => {
@@ -46,10 +46,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("privateMessage", (data) => {
-    let fromName = "";
-    let fromId = "";
-    let toName = "";
-    let toId = "";
+    let fromName = "",
+      fromId = "",
+      toName = "",
+      toId = "";
     USERS.forEach((user) => {
       if (data.id === user.id) {
         fromName = user.name;

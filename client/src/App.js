@@ -11,7 +11,6 @@ function App() {
   let { username } = useParams();
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-  const [lastConnection, setLastConnection] = "";
   const [typingUserId, setTypingUserId] = useState("");
   const [typingUserName, setTypingUserName] = useState("");
   const [id, setId] = useState("");
@@ -28,12 +27,6 @@ function App() {
       });
       socketRef.current.on("setup", (history) => {
         setMessages(history);
-      });
-      socketRef.current.on("messageBack", (history) => {
-        setMessages(history);
-      });
-      socketRef.current.on("lastConnectionBack", (name) => {
-        setLastConnection(name);
       });
       socketRef.current.on("usersUpdate", (users) => {
         setUsers(users);
