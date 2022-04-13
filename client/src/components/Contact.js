@@ -12,13 +12,13 @@ export default function Contact(props) {
     const message = inputEl.current.value;
     const myId = props.connection.current.id;
     const targetId = props.id;
-    const myName = props.name;
+    const targetName = props.name;
     inputEl.current.value = "";
     if (myId !== targetId)
       props.connection.current.emit("privateMessage", {
-        fromName: myName,
-        fromId: myId,
-        to: targetId,
+        username: targetName,
+        id: myId,
+        toId: targetId,
         message,
       });
   }

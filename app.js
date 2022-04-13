@@ -46,10 +46,32 @@ io.on("connection", (socket) => {
   });
 
   socket.on("privateMessage", (data) => {
+    let fromName = "";
+    let fromId = "";
+    let toName = "";
+    let toId = "";
+    USERS.forEach((user) => {
+      if (data.id === user.id) {
+        fromName = user.name;
+        fromId = user.id;
+      }
+      if (data.toId === user.id) {
+        toName = user.name;
+        toId = user.id;
+      }
+    });
+    HISTORY.push({
+      fromName: fromName,
+      id: fromId,
+      toId,
+      username: toName,
+      message: data.message,
+      private: true,
+    });
     console.log(
-      `from: ${data.fromName} (${data.fromId}) \n to: ${data.to} \n message: ${data.message}`
+      `from: ${fromName} (${fromId}) \n to: ${toName} (${toId}) \n message: ${data.message}`
     );
-    socket.to(data.to).emit("privateMessageBack", { from: data.fromName, message: data.message });
+    io.emit("setup", HISTORY);
   });
 
   socket.on("disconnect", () => {

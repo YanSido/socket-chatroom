@@ -42,11 +42,6 @@ function App() {
         setTypingUserId(user.id);
         setTypingUserName(user.username);
       });
-      socketRef.current.on("privateMessageBack", (data) => {
-        setMessages((prevState) => {
-          return [...prevState, { username: data.from, message: data.message, private: true }];
-        });
-      });
     } catch {}
   }, []);
 

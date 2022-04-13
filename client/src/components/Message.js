@@ -13,7 +13,7 @@ export default function Message(props) {
     return (
       <li class="clearfix">
         <div class="message other-message float-right">
-          {`${props.username}: `}
+          {props.private ? `TO ${props.username}: ` : `${props.username}:`}
           <br />
           {props.message}
           <br />
