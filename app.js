@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 io.on("connection", (socket) => {
-  USERS.push({ name: socket.handshake.query.username, status: "online" });
+  USERS.push({ id: socket.id, name: socket.handshake.query.username, status: "online" });
   console.log(socket.handshake.query.username, "is connected");
 
   socket.on("setup", () => {
@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(socket.handshake.query.username, "is disconnected");
     USERS.forEach((user) => {
-      if (user.name === socket.handshake.query.username) {
+      if (user.id === socket.id) {
         user.status = "offline";
         user.lastseen = getTime();
       }

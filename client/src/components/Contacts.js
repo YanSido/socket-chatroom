@@ -11,7 +11,7 @@ export default function Contacts(props) {
       <ul class="list-unstyled chat-list mt-2">
         {props.users.map((user, index) => {
           if (user.status === "online") {
-            if (user.name === props.connection.current.id)
+            if (user.id === props.connection.current.id)
               return (
                 <Contact connection={props.connection} name={`${user.name} (ME)`} active="active" />
               );

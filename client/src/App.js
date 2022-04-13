@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { nanoid } from "nanoid";
 import io from "socket.io-client";
 import ChatHistory from "./components/ChatHistory";
 import Contacts from "./components/Contacts";
 import GroupHeader from "./components/GroupHeader";
 import MessageInput from "./components/MessageInput";
-import "react-notifications-component/dist/theme.css";
 const URL = "/";
 
 function App() {
@@ -22,9 +20,9 @@ function App() {
     try {
       socketRef.current = io.connect(URL, { query: `username=${username}` });
       socketRef.current.on("connect", () => {
-        setId(socketRef.current.id);
+        setId(username);
         socketRef.current.emit("setup", { username });
-        socketRef.current.emit("lastConnection", socketRef.current.id);
+        socketRef.current.emit("lastConnection", username);
         console.log("Connected to Server");
       });
       socketRef.current.on("setup", (history) => {
@@ -57,7 +55,6 @@ function App() {
         <div class="col-lg-12">
           <div class="card chat-app">
             <div id="plist" class="people-list mb-3">
-              <h1>{username + "SS"}</h1>
               <Contacts connection={socketRef} users={users} />
             </div>
             <div class="chat">
