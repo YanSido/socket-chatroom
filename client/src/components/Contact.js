@@ -11,10 +11,16 @@ export default function Contact(props) {
   function handleSend() {
     const message = inputEl.current.value;
     const myId = props.connection.current.id;
-    const targetId = props.name;
+    const targetId = props.id;
+    const myName = props.name;
     inputEl.current.value = "";
     if (myId !== targetId)
-      props.connection.current.emit("privateMessage", { from: myId, to: targetId, message });
+      props.connection.current.emit("privateMessage", {
+        fromName: myName,
+        fromId: myId,
+        to: targetId,
+        message,
+      });
   }
 
   if (props.active) {

@@ -44,9 +44,8 @@ function App() {
       });
       socketRef.current.on("privateMessageBack", (data) => {
         setMessages((prevState) => {
-          return [...prevState, { name: data.from, message: data.message, private: true }];
+          return [...prevState, { username: data.from, message: data.message, private: true }];
         });
-        console.log("41", messages);
       });
     } catch {}
   }, []);

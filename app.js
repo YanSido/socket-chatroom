@@ -46,8 +46,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("privateMessage", (data) => {
-    console.log(`from: ${data.from} \n to: ${data.to} \n message: ${data.message}`);
-    socket.to(data.to).emit("privateMessageBack", { from: data.from, message: data.message });
+    console.log(
+      `from: ${data.fromName} (${data.fromId}) \n to: ${data.to} \n message: ${data.message}`
+    );
+    socket.to(data.to).emit("privateMessageBack", { from: data.fromName, message: data.message });
   });
 
   socket.on("disconnect", () => {

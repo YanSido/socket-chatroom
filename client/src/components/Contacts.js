@@ -33,12 +33,25 @@ export default function Contacts(props) {
                     connection={props.connection}
                     name={`${user.name} (ME)`}
                     active="active"
+                    id={user.id}
                   />
                 );
-              return <Contact connection={props.connection} name={user.name} active="active" />;
+              return (
+                <Contact
+                  connection={props.connection}
+                  name={user.name}
+                  id={user.id}
+                  active="active"
+                />
+              );
             } else
               return (
-                <Contact connection={props.connection} name={user.name} lastseen={user.lastseen} />
+                <Contact
+                  connection={props.connection}
+                  name={user.name}
+                  id={user.id}
+                  lastseen={user.lastseen}
+                />
               );
           })}
       </ul>
